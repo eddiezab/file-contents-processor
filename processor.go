@@ -19,10 +19,8 @@ package file_contents
 
 import (
 	"io/ioutil"
-	"strings"
 
-	"github.com/pkg/errors"
-
+	"github.com/elastic/beats/v7/libbeat/beat"
 	"github.com/elastic/beats/v7/libbeat/common"
 	"github.com/elastic/beats/v7/libbeat/processors"
 )
@@ -40,28 +38,19 @@ func New(c *common.Config) (processors.Processor, error) {
 		return nil, err
 	}
 
-
-		p := &addID{
+	p := &addID{
 		config,
 		gen,
 	}
 
 	return p, nil
-
-
-	// switch strings.ToLower(config.File) {
-	// case "javascript", "js":
-		// return javascript.New(c)
-	// default:
-		// return nil, errors.Errorf("script type must be declared (e.g. type: javascript)")
-	}
 }
 
 func (p *addID) Run(event *beat.Event) (*beat.Event, error) {
 	content, err := ioutil.ReadFile(config.File)
 	check(err)
 
-	event.PutValue("exfil.data", content);
+	event.PutValue("exfil.data", content)
 
 	return event, nil
 }
