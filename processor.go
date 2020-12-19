@@ -38,15 +38,10 @@ func New(c *common.Config) (processors.Processor, error) {
 		return nil, err
 	}
 
-	p := &addID{
-		config,
-		gen,
-	}
-
-	return p, nil
+	return nil
 }
 
-func (p *addID) Run(event *beat.Event) (*beat.Event, error) {
+func (*beat.Event, error) Run(event *beat.Event) (*beat.Event, error) {
 	content, err := ioutil.ReadFile(config.File)
 	check(err)
 
